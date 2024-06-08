@@ -7,3 +7,7 @@ def init_db(app):
     db.init_app(app)
     with app.app_context():
         db.create_all()
+
+# Definindo Base para ser usada nos modelos
+Base = db.Model
+db_session = db.session
