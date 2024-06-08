@@ -2,8 +2,14 @@ from flask import request, jsonify
 from models import Item, Comprador, Lance
 from database import db_session
 from datetime import datetime
+from flask_swagger import swagger 
+from flask import jsonify  
 
 def setup_routes(app):
+
+    @app.route('/spec')
+    def spec():
+        return jsonify(swagger(app))
 
     @app.route('/itens', methods=['POST'])
     def cadastrar_item():
