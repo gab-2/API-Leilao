@@ -2,14 +2,25 @@ from flask import request, jsonify
 from models import Item, Comprador, Lance
 from database import db_session
 from datetime import datetime
-from flask_swagger import swagger 
-from flask import jsonify  
+from flask_swagger import swagger  
+from flask_swagger_ui import get_swaggerui_blueprint  
 
 def setup_routes(app):
 
     @app.route('/spec')
     def spec():
         return jsonify(swagger(app))
+
+    SWAGGER_URL = '/swagger'
+    API_URL = '/spec'
+    swaggerui_blueprint = get_swaggerui_blueprint(
+        SWAGGER_URL,
+        API_URL,
+        config={
+            'app_name': "Auction API"
+        }
+    )
+    app.register_blueprint(swaggerui_blueprint, url_prefix=SWAGGER_URL)
 
     @app.route('/itens', methods=['POST'])
     def cadastrar_item():
